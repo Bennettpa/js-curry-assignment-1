@@ -24,7 +24,7 @@ const total =
     let result = 0
     for (let item in items) {
       for (let listing in listings) {
-        result += listedPrice(listing, item.name)
+        result += listedPrice(listing).name(item.name)
       }
     }
     return result
