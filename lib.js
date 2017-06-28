@@ -22,11 +22,13 @@ const listedPrice =
 const total =
   (listings, items) => {
     let result = 0
-    for (let item in items) {
-      for (let listing in listings) {
-        result += listedPrice(listing).name(item.name)
-      }
+    items.forEach(item => {
+      listings.forEach(listing => {
+        const priceLookup = listedPrice(listing)
+        result += priceLookup(item)
+      })
     }
+  )
     return result
   }
 
@@ -37,10 +39,12 @@ const calculateTotals =
   listings =>
     carts => {
       let result = []
-      for (let cart in carts) {
-        console.log(cart.customer)
-        result.push((cart.customer, total(listings, cart.items)))
-      }
+      carts.forEach(cart => {
+        const {customer, items} = cart
+        // console.log('customer: ' + customer + ' total: ' + total(listings, items))
+        // console.log({customer: customer, total: total(listings, items)})
+        result.push({customer: customer, total: total(listings, items)})
+      })
       return result
     }
 
